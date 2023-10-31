@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calcular Color Promedio de una Imagen y su Gráfico RGB</title>
+    <title>Identificar Color de un Píxel y su Gráfico RGB</title>
 </head>
 <body>
-    <h1>Calcular Color Promedio de una Imagen y su Gráfico RGB</h1>
+    <h1>Identificar Color de un Píxel y su Gráfico RGB</h1>
     <input type="file" id="imagenInput" accept="image/*" />
-    <canvas id="canvas" width="200" height="200"></canvas>
+    <canvas id="canvas" width="400" height="400"></canvas>
     <div id="colorRGB"></div>
     <div id="graficoRGB">
         <div id="rLinea" class="linea" style="background-color: red;"></div>
@@ -22,6 +22,28 @@
         const gLinea = document.getElementById("gLinea");
         const bLinea = document.getElementById("bLinea");
 
+        // Agregar un evento de clic al canvas
+        canvas.addEventListener("click", obtenerColorEnCoordenadas);
+
+        function obtenerColorEnCoordenadas(event) {
+            const ctx = canvas.getContext("2d");
+            const x = event.offsetX;
+            const y = event.offsetY;
+
+            const imageData = ctx.getImageData(x, y, 1, 1);
+            const pixelData = imageData.data;
+
+            const r = pixelData[0];
+            const g = pixelData[1];
+            const b = pixelData[2];
+
+            colorRGB.innerHTML = `RGB: (${r}, ${g}, ${b})`;
+
+            rLinea.style.height = `${r}px`;
+            gLinea.style.height = `${g}px`;
+            bLinea.style.height = `${b}px`;
+        }
+
         imagenInput.addEventListener("change", cargarImagen);
 
         function cargarImagen() {
@@ -31,30 +53,6 @@
             img.onload = function () {
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const pixelData = imageData.data;
-
-                let totalR = 0;
-                let totalG = 0;
-                let totalB = 0;
-
-                for (let i = 0; i < pixelData.length; i += 4) {
-                    totalR += pixelData[i];
-                    totalG += pixelData[i + 1];
-                    totalB += pixelData[i + 2];
-                }
-
-                const pixelCount = pixelData.length / 4;
-                const avgR = Math.round(totalR / pixelCount);
-                const avgG = Math.round(totalG / pixelCount);
-                const avgB = Math.round(totalB / pixelCount);
-
-                colorRGB.innerHTML = `RGB Promedio: (${avgR}, ${avgG}, ${avgB})`;
-
-                rLinea.style.height = `${avgR}px`;
-                gLinea.style.height = `${avgG}px`;
-                bLinea.style.height = `${avgB}px`;
             };
 
             img.src = URL.createObjectURL(file);
@@ -71,4 +69,3 @@
     </style>
 </body>
 </html>
-
