@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Convertir código HEX a RGB</title>
+    <title>Identificar Color de un Píxel y su Gráfico RGB</title>
 </head>
 <body>
-    <h1>Convertir código HEX a RGB</h1>
-    <input type="text" id="hexInput" placeholder="Código HEX" />
-    <button onclick="convertirHexARGB()">Convertir</button>
-    <div id="resultadoRGB"></div>
+    <h1>Identificar Color de un Píxel y su Gráfico RGB</h1>
+    <input type="file" id="imagenInput" accept="image/*" />
+    <canvas id="canvas" width="200" height="200"></canvas>
+    <div id="colorRGB"></div>
     <div id="graficoRGB">
         <div id="rLinea" class="linea" style="background-color: red;"></div>
         <div id="gLinea" class="linea" style="background-color: green;"></div>
@@ -15,30 +15,41 @@
     </div>
 
     <script>
-        function convertirHexARGB() {
-            const hexInput = document.getElementById("hexInput").value;
-            const resultadoRGB = document.getElementById("resultadoRGB");
-            const rLinea = document.getElementById("rLinea");
-            const gLinea = document.getElementById("gLinea");
-            const bLinea = document.getElementById("bLinea");
+        const imagenInput = document.getElementById("imagenInput");
+        const canvas = document.getElementById("canvas");
+        const colorRGB = document.getElementById("colorRGB");
+        const rLinea = document.getElementById("rLinea");
+        const gLinea = document.getElementById("gLinea");
+        const bLinea = document.getElementById("bLinea");
 
-            // Verifica si el código HEX es válido
-            if (/^#([0-9A-F]{3}){1,2}$/i.test(hexInput)) {
-                // Convierte el código HEX a RGB
-                const hex = hexInput.substring(1); // Elimina el signo #
-                const r = parseInt(hex.substring(0, 2), 16);
-                const g = parseInt(hex.substring(2, 4), 16);
-                const b = parseInt(hex.substring(4, 6), 16);
+        imagenInput.addEventListener("change", cargarImagen);
 
-                resultadoRGB.innerHTML = `RGB: (${r}, ${g}, ${b})`;
+        function cargarImagen() {
+            const file = imagenInput.files[0];
+            const img = new Image();
 
-                // Actualiza el gráfico
+            img.onload = function () {
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+
+                const imageData = ctx.getImageData(centerX, centerY, 1, 1);
+                const pixelData = imageData.data;
+
+                const r = pixelData[0];
+                const g = pixelData[1];
+                const b = pixelData[2];
+
+                colorRGB.innerHTML = `RGB: (${r}, ${g}, ${b})`;
+
                 rLinea.style.height = `${r}px`;
                 gLinea.style.height = `${g}px`;
                 bLinea.style.height = `${b}px`;
-            } else {
-                resultadoRGB.innerHTML = "Código HEX no válido";
-            }
+            };
+
+            img.src = URL.createObjectURL(file);
         }
     </script>
 
