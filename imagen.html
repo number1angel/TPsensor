@@ -1,124 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Identificar Color de un Píxel y su Gráfico RGB</title>
-</head>
-<body>
-    <h1>Identificar Color de un Píxel y su Gráfico RGB</h1>
-    <input type="file" id="imagenInput" accept="image/*" />
-    <canvas id="canvas" width="400" height="400"></canvas>
-    <div id="colorRGB"></div>
-    <div id="graficoRGB">
-        <div id="rLinea" class="linea" style="background-color: red;"></div>
-        <div id="gLinea" class="linea" style="background-color: green;"></div>
-        <div id="bLinea" class="linea" style="background-color: blue;"></div>
-    </div>
-        <p>Conectar a servidor MQTT</p>
-        <input type="text" id="ipInput" placeholder="Dirección IP del servidor MQTT">
-        <input type="text" id="topicInput" placeholder="Tema MQTT">
-        <input type="text" id="userInput" placeholder="Nombre de usuario (opcional)">
-        <input type="password" id="passwordInput" placeholder="Contraseña (opcional)">
-        <button onclick="connectToMQTT()">Conectar</button>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
+    <title>Página Web Interactiva</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.0.0/mqtt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script>
-        let client;
-    
-        function connectToMQTT() {
-            const ip = document.getElementById("ipInput").value;
-            const topic = document.getElementById("topicInput").value;
-            const user = document.getElementById("userInput").value || null;
-            const password = document.getElementById("passwordInput").value || null;
-    
-            client = new Paho.MQTT.Client(ip, 8083, "clientId");
-            client.onConnectionLost = onConnectionLost;
-            client.onMessageArrived = onMessageArrived;
-    
-            const connectOptions = {
-                onSuccess: onConnect,
-                userName: user,
-                password: password,
-                useSSL: true
-            };
-    
-            client.connect(connectOptions);
-        }
-    
-        function onConnect() {
-            const topic = document.getElementById("topicInput").value;
-            client.subscribe(topic);
-        }
-    
-        function onConnectionLost(responseObject) {
-            if (responseObject.errorCode !== 0) {
-                console.log("Conexión perdida: " + responseObject.errorMessage);
-            }
-        }
-    
-        function onMessageArrived(message) {
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext("2d");
-        const img = new Image();
-        img.onload = function () {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const broker = 'mqtt://10.0.3.201:1883';
+        const options = {
+            username: '', 
+            password: '', 
         };
- 
-        const mqttImageURL = message.payloadString; // Asumiendo que la URL de la imagen está contenida en el payload  
- 
-        img.src = mqttImageURL;
-        }
-        
-        const imagenInput = document.getElementById("imagenInput");
-        const canvas = document.getElementById("canvas");
-        const colorRGB = document.getElementById("colorRGB");
-        const rLinea = document.getElementById("rLinea");
-        const gLinea = document.getElementById("gLinea");
-        const bLinea = document.getElementById("bLinea");
+        const topicR = 'R'; 
+        const topicG = 'G';
+        const topicB = 'B';
 
-        canvas.addEventListener("click", obtenerColorEnCoordenadas);
+        let dataR = [];
+        let dataG = [];
+        let dataB = [];
 
-        function obtenerColorEnCoordenadas(event) {
-            const ctx = canvas.getContext("2d");
-            const x = event.offsetX;
-            const y = event.offsetY;
-
-            const imageData = ctx.getImageData(x, y, 1, 1);
-            const pixelData = imageData.data;
-
-            const r = pixelData[0];
-            const g = pixelData[1];
-            const b = pixelData[2];
-
-            colorRGB.innerHTML = `RGB: (${r}, ${g}, ${b})`;
-
-            rLinea.style.height = `${r}px`;
-            gLinea.style.height = `${g}px`;
-            bLinea.style.height = `${b}px`;
+        function connectMQTT() {
+            client = mqtt.connect(broker, options);
+            client.on('connect', function () {
+                console.log('Conexión establecida con el servidor MQTT');
+                client.subscribe(topicR, function (err) {
+                    if (!err) {
+                        console.log('Suscripción exitosa al tema R');
+                    }
+                });
+                client.subscribe(topicG, function (err) {
+                    if (!err) {
+                        console.log('Suscripción exitosa al tema G');
+                    }
+                });
+                client.subscribe(topicB, function (err) {
+                    if (!err) {
+                        console.log('Suscripción exitosa al tema B');
+                    }
+                });
+            });
         }
 
-        imagenInput.addEventListener("change", cargarImagen);
+        function receiveData() {
+            client.on('message', function (topic, message) {
+                console.log('Mensaje recibido en el tema ' + topic + ': ' + message.toString());
+                updateData(topic, message.toString());
+            });
+        }
 
-        function cargarImagen() {
-            const file = imagenInput.files[0];
-            const img = new Image();
+        function updateChart() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['R', 'G', 'B'],
+                    datasets: [
+                        {
+                            label: 'Datos del Sensor R',
+                            data: dataR,
+                            borderColor: 'red',
+                            fill: false
+                        },
+                        {
+                            label: 'Datos del Sensor G',
+                            data: dataG,
+                            borderColor: 'green',
+                            fill: false
+                        },
+                        {
+                            label: 'Datos del Sensor B',
+                            data: dataB,
+                            borderColor: 'blue',
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
 
-            img.onload = function () {
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            };
-
-            img.src = URL.createObjectURL(file);
+        function updateData(topic, message) {
+            if (topic === 'R') {
+                dataR.push(message);
+            } else if (topic === 'G') {
+                dataG.push(message);
+            } else if (topic === 'B') {
+                dataB.push(message);
+            }
+            updateChart();
         }
     </script>
-
-    <style>
-        .linea {
-            width: 20px;
-            height: 100px;
-            display: inline-block;
-            margin: 5px;
-        }
-    </style>
+</head>
+<body onload="connectMQTT(); receiveData();">
+    <h1>Visualización de datos en tiempo real</h1>
+    <canvas id="myChart" width="400" height="400"></canvas>
 </body>
 </html>
