@@ -13,8 +13,42 @@
         <div id="gLinea" class="linea" style="background-color: green;"></div>
         <div id="bLinea" class="linea" style="background-color: blue;"></div>
     </div>
+        <p>Conectar a servidor MQTT</p>
+        <input type="text" id="ipInput" placeholder="Dirección IP del servidor MQTT">
+        <input type="text" id="topicInput" placeholder="Tema MQTT">
+        <input type="text" id="userInput" placeholder="Nombre de usuario (opcional)">
+        <input type="password" id="passwordInput" placeholder="Contraseña (opcional)">
+        <button onclick="connectToMQTT()">Conectar</button>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
     <script>
+        let client;
+
+        function connectToMQTT() {
+            const ip = document.getElementById("ipInput").value;
+            const topic = document.getElementById("topicInput").value;
+            const user = document.getElementById("userInput").value || null;
+            const password = document.getElementById("passwordInput").value || null;
+
+            // Resto del código de conexión MQTT
+            // ...
+
+            // Simulación de recepción de datos desde MQTT
+            // Puedes utilizar esta función para simular la recepción de datos desde MQTT
+            // y actualizar la imagen en el canvas.
+            // Recuerda reemplazar este código con la lógica real de MQTT cuando tengas la información del servidor MQTT.
+
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            const img = new Image();
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            // Simulación de datos de imagen desde MQTT
+            img.src = "URL_DE_LA_IMAGEN_DE_MQTT";
+        }
+
         const imagenInput = document.getElementById("imagenInput");
         const canvas = document.getElementById("canvas");
         const colorRGB = document.getElementById("colorRGB");
@@ -22,7 +56,6 @@
         const gLinea = document.getElementById("gLinea");
         const bLinea = document.getElementById("bLinea");
 
-        // Agregar un evento de clic al canvas
         canvas.addEventListener("click", obtenerColorEnCoordenadas);
 
         function obtenerColorEnCoordenadas(event) {
