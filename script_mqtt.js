@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sensor TCS34725</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.0.0/mqtt.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    <script>
-        const broker = 'mqtt://10.0.3.201:1883';
+const broker = 'mqtt://10.0.3.201:1883';
         const options = {
             username: '', 
             password: '', 
@@ -94,10 +87,3 @@
             }
             updateChart();
         }
-    </script>
-</head>
-<body onload="connectMQTT(); receiveData();">
-    <h1>Visualización de datos en tiempo real</h1>
-    <canvas id="myChart" width="400" height="400"></canvas>
-</body>
-</html>

@@ -1,0 +1,114 @@
+body {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+}
+
+.fondoAnimado1 {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background: #000;
+    color: #ffffff;
+    font-family: sans-serif;
+    overflow: hidden;
+    animation: backgroundTransition 1s linear infinite alternate;
+}
+
+@keyframes backgroundTransition {
+    0% {
+        background: #e60909;
+    }
+    45% {
+        background: rgb(23, 225, 87);
+    }
+    55% {
+        background: #870000;
+    }
+    100% {
+        background: #000;
+    }
+}
+
+.fondoAnimado2 {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(100deg, #ff00ff, #6200ff, #00ffff, #ffff00, #d3000e);
+    background-size: 500% 500%;
+    background-image: linear-gradient(100deg, #ff00ff, #6200ff, #00ffff, #ffff00, #d3000e);
+    animation: gradientAnimation 30s linear infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.content {
+    padding: 20px;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background: transparent;
+    color: #ffffff;
+    font-family: sans-serif;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.menu1 {
+    animation: backgroundTransition 1s linear infinite alternate;
+    overflow: hidden;
+}
+
+.menu1 a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menu1 a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.hidden {
+    display: none;
+}
+
+.menu2 {
+    background: linear-gradient(100deg, #ff00ff, #6200ff, #00ffff, #ffff00, #d3000e);
+    background-size: 500% 500%;
+    background-image: linear-gradient(100deg, #ff00ff, #6200ff, #00ffff, #ffff00, #d3000e);
+    animation: gradientAnimation 30s linear infinite;
+    overflow: hidden;
+}
+
+.menu2 a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menu2 a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.hidden {
+    display: none;
+}
