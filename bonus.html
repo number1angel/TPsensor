@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.cdnfonts.com/css/ocr-a-std" rel="stylesheet">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/ocr-a-std'); /*no lo pude meter en el css*/
+    </style>
+    <title>Sección 2: Identificar Color de un Píxel y su Gráfico RGB</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+<div class="fondoAnimado2">
+    <div class="menu2">
+        <a href="inicio.html">INICIO</a>
+        <a href="consigna.html">mqtt</a>
+        <a href="bonus.html">bonus!</a>
+        <a href="https://prezi.com/view/25y7BLpqUiGdpCqf9MZ4/" class="tcs-link">tcs34725</a>
+    </div>
+    <div class="content">
+        <h1>&star;Identificar color de pixel&star;</h1>
+        <div class="center-content">
+        <p>Selecciona una imagen de tu ordenador y averigua su componente r, g y b.</p>
+        </div>
+        <p> </p>
+        <p> </p>
+        <p> </p>
+        <input type="file" id="imagenInput" accept="image/*" />
+        <canvas id="canvas" width="400" height="400"></canvas>
+        <div class="posgrafico">
+        <div id="graficoRGB">
+            <div class="barra" id="rLinea" style="background-color: red;"></div>
+            <div class="barra" id="gLinea" style="background-color: green;"></div>
+            <div class="barra" id="bLinea" style="background-color: blue;"></div>
+        </div>
+        <div class="colorRGB">
+        <div id="colorRGB"></div>
+        </div>
+    </div>
+    <script src="script_imagen.js"></script>
+    </div>
+</div>
+</body>
+</html>
