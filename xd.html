@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generador de números aleatorios</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Generador de Números Aleatorios</h1>
+    <canvas id="randomNumberChart" width="400" height="200"></canvas>
+
+    <script>
+        // Obtener una referencia al elemento canvas y su contexto
+        var canvas = document.getElementById('randomNumberChart');
+        var ctx = canvas.getContext('2d');
+
+        // Configurar el gráfico en tiempo real
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Números Aleatorios (Rojo)',
+                    data: [],
+                    borderColor: 'rgb(255, 0, 0)',
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: 'Números Aleatorios (Azul)',
+                    data: [],
+                    borderColor: 'rgb(0, 0, 255)',
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: 'Números Aleatorios (Verde)',
+                    data: [],
+                    borderColor: 'rgb(0, 255, 0)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Función para generar números aleatorios
+        function generateRandomNumber() {
+            return Math.random();
+        }
+
+        // Actualizar el gráfico en tiempo real
+        var xValue = 0;
+        setInterval(function() {
+            var randomValue1 = generateRandomNumber();
+            var randomValue2 = generateRandomNumber();
+            var randomValue3 = generateRandomNumber();
+            chart.data.labels.push(xValue);
+            chart.data.datasets[0].data.push(randomValue1);
+            chart.data.datasets[1].data.push(randomValue2);
+            chart.data.datasets[2].data.push(randomValue3);
+            xValue++;
+            chart.update();
+        }, 1000); // Actualizar cada segundo
+    </script>
+</body>
+</html>
