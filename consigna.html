@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.cdnfonts.com/css/ocr-a-std" rel="stylesheet">
     <style>
         @import url('https://fonts.cdnfonts.com/css/ocr-a-std'); /*no lo pude meter en el css*/
@@ -17,11 +18,12 @@
             <a href="https://prezi.com/view/25y7BLpqUiGdpCqf9MZ4/" class="tcs-link">tcs34725</a>
         </div>
         <div class="content">
-            <h1>Consigna MTQQ</h1>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-            <script src="script_mqtt.js"></script>
+            <h1>Consigna MQTT</h1>
+            <canvas id="randomNumberChart" width="600" height="200"></canvas>
+            <div id="colorGradientContainer" style="width: 600px; height: 20px; display: flex; flex-direction: row; justify-content: flex-start;"></div>
+            <input type="range" id="scrollBar" min="0" max="100" step="1" value="0">
         </div>
     </div>
+    <script src="script_mqtt.js"></script>
 </body>
 </html>

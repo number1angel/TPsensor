@@ -3,6 +3,11 @@ body {
     height: 100vh;
     margin: 0;
 }
+
+p.letrasgrafica {
+    color: #ffffff;
+    font-family: 'OCR A Std', monospace;
+}
   
 p.integrantes {
     display: flex;
@@ -138,9 +143,13 @@ p.integrantes {
     display: none;
 }
 
+.graficomqtt {
+    position: absolute;
+    top: 140px;
+    right: 380px;
+}
+
 .center-content {
-    align-items: center;
-    justify-content: center;
     text-align: center;
   }
 
