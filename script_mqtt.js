@@ -189,3 +189,4 @@ scrollBar.addEventListener('change', function () {
     chart.options.scales.x.max = parseInt(scrollBar.value, 10) + maxDataPoints;
     chart.update();
 });
+});
