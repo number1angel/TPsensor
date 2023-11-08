@@ -5,7 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.cdnfonts.com/css/ocr-a-std" rel="stylesheet">
     <style>
-        @import url('https://fonts.cdnfonts.com/css/ocr-a-std'); /*no lo pude meter en el css*/
+        @import url('https://fonts.cdnfonts.com/css/ocr-a-std'); /* No lo pude meter en el CSS -->*/
     </style>
     <title>Sección 1: Visualización de datos en tiempo real</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -20,13 +20,16 @@
         </div>
         <div class="content">
             <h1>Consigna MQTT</h1>
-            <canvas id="randomNumberChart" width="600" height="200"></canvas>
+            <canvas id="mqttChart" width="400" height="200"></canvas>
+            <script src="conexion.js"></script>
+
+            <!-- <canvas id="randomNumberChart" width="600" height="200"></canvas> -->
+
             <div id="colorGradientContainer" style="width: 1267px; height: 20px; display: flex; flex-direction: row; justify-content: flex-start; margin-left: 33px; background: transparent;"></div>
 
-            <input type="range" id="scrollBar" min="0" max="100" step="1" value="0">
+            <!-- <input type="range" id="scrollBar" min="0" max="100" step="1" value="0"> -->
         </div>
     </div>
-    <script src="script_mqtt.js"></script>
+    <!-- <script src="script_mqtt.js"></script> -->
 </body>
 </html>
-

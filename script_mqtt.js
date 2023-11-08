@@ -1,4 +1,4 @@
-const broker = 'mqtt://10.0.3.201:1883';
+/*const broker = 'mqtt://10.0.3.201:1883';
         const options = {
             username: '', 
             password: '', 
@@ -87,6 +87,7 @@ const broker = 'mqtt://10.0.3.201:1883';
             }
             updateChart();
         }
+*/
 
 /*grafico con numeros randoms*/
 
@@ -167,15 +168,13 @@ function updateChart() {
 
     chart.update();
     currentX++;
-
-    // Create a horizontal colored gradient bar below the chart
+ 
     var colorGradientContainer = document.getElementById('colorGradientContainer');
     var colorWidth = canvas.width / maxDataPoints;
     var color = `rgb(${randomValue1}, ${randomValue2}, ${randomValue3})`;
     var gradientElement = `<div style="width: ${colorWidth}px; background: ${color}; flex-grow: 1;"></div>`;
     colorGradientContainer.innerHTML = gradientElement + colorGradientContainer.innerHTML;
-
-    // Mantener solo los últimos 5 colores
+ 
     if (colorGradientContainer.children.length > maxDataPoints) {
         colorGradientContainer.removeChild(colorGradientContainer.lastChild);
     }
@@ -189,4 +188,4 @@ scrollBar.addEventListener('change', function () {
     chart.options.scales.x.max = parseInt(scrollBar.value, 10) + maxDataPoints;
     chart.update();
 });
-});
+ 
